@@ -30,7 +30,7 @@ class JSAPI:
     self._review_dir = Path(dir)
     self._files = list(self._review_dir.glob("*.re"))
     if guiupdate:
-      self.update_reviewfiles()
+      self.update_list()
 
   def update_list(self):
     """
