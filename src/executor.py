@@ -45,7 +45,7 @@ class Executor:
 
     if err != b"":
       raise ValueError(err.decode(detect(err)["encoding"]))
-    return out.decode(detect(out)["encoding"])
+    return out.decode(detect(out)["encoding"]) if out != b"" else ""
 
   def compile(self, filepath):
     """
