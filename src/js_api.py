@@ -48,6 +48,13 @@ class JSAPI:
       combo.appendChild(op);
       """.format(file.name)
     webview.evaluate_js(js)
+    self.show_review(self._files[0])
+
+  def show_review(self, filename):
+    """
+    Update GUI Re:VIEW window.
+    """
+    self._review_file = filename
 
 def update_dirname(dir):
   """
