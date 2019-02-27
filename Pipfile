@@ -9,6 +9,7 @@ pylint = "*"
 [packages]
 pywebview = "*"
 pywin32 = "*"
+chardet = "*"
 
 [requires]
 python_version = "3.6"
