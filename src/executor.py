@@ -53,17 +53,25 @@ class Executor:
 
     Parameters
     ----
-    filepath: str or Path
+    filepath: Path
       File path to be converted
     """
     if self._review_path is not None:
-      out = self.call([self._review_path,
-        "compile",
-        "--target", "html",
-        filepath])
+      import os
+      cwd = os.getcwd()
+      try:
+        os.chdir(filepath.parent)
+        out = self.call(["ruby",
+          self._review_path,
+          "compile",
+          "--target=html",
+          filepath.name])
+      finally:
+        os.chdir(cwd)
       return out
 
 if __name__ == "__main__":
+  from pathlib import Path
   exec = Executor()
   try:
     exec.call(["unknown"])
@@ -75,4 +83,4 @@ if __name__ == "__main__":
     print("Test OK")
     print(e)
   print(exec.findreview())
-  print(exec.compile("../testbook/testbook.re"))
+  print(exec.compile(Path(__file__).parent.parent / "testbook" / "testbook.re"))
