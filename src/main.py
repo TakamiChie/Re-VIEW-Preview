@@ -29,7 +29,7 @@ def main():
   if args.dir is not None:
     api = js_api.JSAPI(args.dir)
     threading.Thread(target=load_thread, args=(args, api)).start()
-    webview.create_window(title=APPNAME, width=640, height=320, js_api=api)
+    webview.create_window(title=APPNAME, width=640, height=320, min_size=(360, 400), js_api=api)
 
 if __name__ == "__main__":
   main()
