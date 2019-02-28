@@ -2,7 +2,7 @@
 
 This is a test book. previewing in HTML.
 
-This is the first chapter. The other chapter can be switched from the combo box.
+This is the second chapter. The other chapter can be switched from the combo box.
 
 == Section
 
