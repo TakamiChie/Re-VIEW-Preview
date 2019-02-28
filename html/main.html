@@ -4,18 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../node_modules/bootstrap-honoka/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="../html/main.css">
   <title>Re:View Preview</title>
 </head>
 <body>
-  <header class="navbar navbar-expand-lg navbar-light bg-light">
-    <h1>Re:View Preview</h1>
-    <form class="form-inline my-2 my-lg-0">
-      <select class="form-control mr-sm-2" id="review-file" aria-label="file"></select>
+  <header class="alert alert-primary">
+    <h1 class="float-left">Preview</h1>
+    <form class="form-inline float-right">
+      <select class="form-control" id="review-file" aria-label="file"></select>
     </form>
   </header>
+  <div class="container-fluid">
+    <iframe id="preview_frame" src="../html/loading.html"></iframe>
+  </div>
   <script src="../node_modules/es6-promise/dist/es6-promise.js"></script>
   <script src="../node_modules/jquery/dist/jquery.js"></script>
-  <script src="../node_modules/popper.js/dist/popper.js"></script>
   <script src="../node_modules/bootstrap-honoka/dist/js/bootstrap.js"></script>
 </body>
 </html>
