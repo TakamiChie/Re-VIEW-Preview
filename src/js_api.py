@@ -1,6 +1,8 @@
 from pathlib import Path
 import webview
 
+from executor import Executor
+
 import main
 
 class JSAPI:
@@ -16,6 +18,8 @@ class JSAPI:
     review_dir: str
       Directory of Re:VIEW manuscript.
     """
+    self.executor = Executor()
+    self.executor.findreview()
     self.change_review_dir(review_dir, guiupdate=False)
 
   def change_review_dir(self, dir, guiupdate=True):
@@ -64,4 +68,9 @@ class JSAPI:
     Update GUI Re:VIEW window.
     """
     self._review_file = filename
+    reviewtxt = self.executor.compile(self._review_file)
+    previewhtml = self._review_file.parent / "preview.html"
+    with open(previewhtml, mode="w", encoding="utf-8") as f:
+      f.write(reviewtxt)
+    webview.evaluate_js("document.getElementById('preview_frame').src = '{0}';".format(str(previewhtml).replace("\\", "\\\\")))
 

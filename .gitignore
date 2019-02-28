@@ -2,3 +2,4 @@ node_modules
 .venv/**
 __pycache__
 testbook/doc
+testbook/preview.html
