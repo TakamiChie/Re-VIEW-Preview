@@ -55,10 +55,12 @@ class JSAPI:
     """
     for file in self._files:
       js += """
-      let op = document.createElement("option");
-      op.value = "{0}";
-      op.text = "{0}";
-      combo.appendChild(op);
+      {{
+        let op = document.createElement("option");
+        op.value = "{0}";
+        op.text = "{0}";
+        combo.appendChild(op);
+      }}
       """.format(file.name)
     webview.evaluate_js(js)
     self.show_review(self._files[0])
