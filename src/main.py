@@ -21,7 +21,7 @@ def load_thread(args, api):
   """
   with open("html/main.html", mode="r", encoding="utf-8") as f:
     webview.load_html(f.read())
-  js_api.update_dirname(args.dir)
+  api.update_title()
   api.update_list()
 
 def main():

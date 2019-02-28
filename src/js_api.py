@@ -1,6 +1,8 @@
 from pathlib import Path
 import webview
 
+import main
+
 class JSAPI:
   """
   JSAPI
@@ -30,7 +32,14 @@ class JSAPI:
     self._review_dir = Path(dir)
     self._files = list(self._review_dir.glob("*.re"))
     if guiupdate:
+      self.update_title()
       self.update_list()
+
+  def update_title(self):
+    """
+    Update GUI Window title.
+    """
+    webview.set_title("{0} - {1}".format(main.APPNAME, self._review_dir.stem))
 
   def update_list(self):
     """
@@ -55,16 +64,4 @@ class JSAPI:
     Update GUI Re:VIEW window.
     """
     self._review_file = filename
-
-def update_dirname(dir):
-  """
-  Update the directory notation on the GUI.
-  This method is called from the Python side.
-
-  Parameter
-  ----
-  dir: str
-    Directory of Re:VIEW manuscript.
-  """
-  webview.evaluate_js("document.getElementById('{0}').value = '{1}'".format("review-dir", dir))
 
