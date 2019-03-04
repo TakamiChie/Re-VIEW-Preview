@@ -68,11 +68,51 @@ class JSAPI:
   def show_review(self, filename):
     """
     Update GUI Re:VIEW window.
+
+    Parameters
+    ----
+    filename: str or Path
+      The file path of the file to preview.
+      If the argument is a relative path,
+      it is considered to be a relative path from review_dir.
     """
-    self._review_file = filename
+    if Path(filename).is_absolute():
+      self._review_file = filename
+    else:
+      self._review_file = self._review_dir / filename
+    if loading:
+      webview.evaluate_js("document.getElementById('preview_frame').src = '{0}';".format(self._path_to_url(mypath() / "html" / "loading.html")))
     reviewtxt = self.executor.compile(self._review_file)
     previewhtml = self._review_file.parent / "preview.html"
     with open(previewhtml, mode="w", encoding="utf-8") as f:
       f.write(reviewtxt)
-    webview.evaluate_js("document.getElementById('preview_frame').src = '{0}';".format(str(previewhtml).replace("\\", "\\\\")))
+    webview.evaluate_js("document.getElementById('preview_frame').src = '{0}';".format(self._path_to_url((previewhtml))))
 
+  def _path_to_url(self, path):
+    """
+    Convert the file path to a URL that can be embedded in JavaScript.
+
+    Parameters
+    ----
+    path: Path
+      Path
+
+    Returns
+    ----
+    url: str
+      URL
+    """
+    return str(path).replace("\\", "\\\\")
+
+def mypath():
+  """
+  Get the root folder path for the project.
+
+  Returns
+  ----
+  path: Path
+    Root folder path for the project.
+  """
+  import sys
+  return Path(sys.argv[0]) if hasattr(sys, "frozen") else \
+    Path(__file__).parent.parent
