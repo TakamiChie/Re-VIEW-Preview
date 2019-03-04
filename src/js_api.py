@@ -116,5 +116,5 @@ def mypath():
     Root folder path for the project.
   """
   import sys
-  return Path(sys.argv[0]).parent if hasattr(sys, "frozen") else \
+  return Path(sys.prefix) if hasattr(sys, "frozen") else \
     Path(__file__).parent.parent

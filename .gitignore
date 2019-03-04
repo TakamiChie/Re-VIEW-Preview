@@ -3,3 +3,4 @@ node_modules
 __pycache__
 testbook/doc
 testbook/preview.html
+dist

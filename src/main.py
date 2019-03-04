@@ -19,8 +19,12 @@ def load_thread(args, api):
   """
   Start work thread
   """
-  with open("html/main.html", mode="r", encoding="utf-8") as f:
-    webview.load_html(f.read())
+  with open(js_api.mypath() / "html" / "main.html", mode="r", encoding="utf-8") as f:
+    html = ""
+    mypath = js_api.path_to_url(js_api.mypath())
+    for line in f:
+      html += line.replace("..", mypath)
+    webview.load_html(html)
   api.update_title()
   api.update_list()
 
