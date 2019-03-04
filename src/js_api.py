@@ -65,18 +65,21 @@ class JSAPI:
     webview.evaluate_js(js)
     self.show_review(self._files[0])
 
-  def show_review(self, filename):
+  def show_review(self, filename = None):
     """
     Update GUI Re:VIEW window.
 
     Parameters
     ----
-    filename: str or Path
+    filename: str or Path or None
       The file path of the file to preview.
       If the argument is a relative path,
       it is considered to be a relative path from review_dir.
+      If the argument is none, only the current file is reloaded.
     """
-    if Path(filename).is_absolute():
+    if filename is None:
+      pass
+    elif Path(filename).is_absolute():
       self._review_file = filename
     else:
       self._review_file = self._review_dir / filename
