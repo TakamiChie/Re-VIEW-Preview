@@ -83,28 +83,28 @@ class JSAPI:
       self._review_file = filename
     else:
       self._review_file = self._review_dir / filename
-    webview.evaluate_js("document.getElementById('preview_frame').src = '{0}';".format(self._path_to_url(mypath() / "html" / "loading.html")))
+    webview.evaluate_js("document.getElementById('preview_frame').src = '{0}';".format(path_to_url(mypath() / "html" / "loading.html")))
     reviewtxt = self.executor.compile(self._review_file)
     previewhtml = self._review_file.parent / "preview.html"
     with open(previewhtml, mode="w", encoding="utf-8") as f:
       f.write(reviewtxt)
-    webview.evaluate_js("document.getElementById('preview_frame').src = '{0}';".format(self._path_to_url((previewhtml))))
+    webview.evaluate_js("document.getElementById('preview_frame').src = '{0}';".format(path_to_url((previewhtml))))
 
-  def _path_to_url(self, path):
-    """
-    Convert the file path to a URL that can be embedded in JavaScript.
+def path_to_url(path):
+  """
+  Convert the file path to a URL that can be embedded in JavaScript.
 
-    Parameters
-    ----
-    path: Path
-      Path
+  Parameters
+  ----
+  path: Path
+    Path
 
-    Returns
-    ----
-    url: str
-      URL
-    """
-    return str(path).replace("\\", "\\\\")
+  Returns
+  ----
+  url: str
+    URL
+  """
+  return str(path).replace("\\", "\\\\")
 
 def mypath():
   """
