@@ -80,8 +80,7 @@ class JSAPI:
       self._review_file = filename
     else:
       self._review_file = self._review_dir / filename
-    if loading:
-      webview.evaluate_js("document.getElementById('preview_frame').src = '{0}';".format(self._path_to_url(mypath() / "html" / "loading.html")))
+    webview.evaluate_js("document.getElementById('preview_frame').src = '{0}';".format(self._path_to_url(mypath() / "html" / "loading.html")))
     reviewtxt = self.executor.compile(self._review_file)
     previewhtml = self._review_file.parent / "preview.html"
     with open(previewhtml, mode="w", encoding="utf-8") as f:
