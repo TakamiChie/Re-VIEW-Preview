@@ -10,9 +10,14 @@ html{
 }
 
 header{
-  height: 60px;
+  height: 50px;
+}
+
+header > .navvar-brand{
+  height: 40px;
+  padding: 10px 15px;
 }
 
 .container-fluid{
-  height: calc(100% - 90px);
+  height: calc(100% - 60px);
 }
