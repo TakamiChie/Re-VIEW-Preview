@@ -9,6 +9,10 @@ html{
   min-width: 20ex;
 }
 
+a.nav-link {
+  cursor: pointer;
+}
+
 header{
   height: 50px;
 }
