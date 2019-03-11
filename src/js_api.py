@@ -1,9 +1,48 @@
 from pathlib import Path
 import webview
+from watchdog.events import FileSystemEventHandler
+from watchdog.observers import Observer
 
 from executor import Executor
 
 import main
+
+class ChangeHandler(FileSystemEventHandler):
+  """
+  Event handlers for watchdog.
+  """
+
+  def __init__(self, owner):
+    """
+    Initialize
+
+    Parameters
+    ----
+    owner: JSAPI
+      owner object.
+    """
+    self.owner = owner
+
+  def on_created(self, event):
+    return
+
+  def on_modified(self, event):
+    """
+    An event handler that is invoked when it detects that a file has been modified.
+
+    Reload the file only when you are updating the currently displayed file.
+
+    Note that in Windows on_modified() occurs twice.
+
+    It is permissible to call the show_review() twice in succession because it may be a case that
+    is not called in succession twice by the environment that the defect
+    does not occur even if it calls show_review() twice in succession.
+    """
+    if Path(event.src_path) == self.owner._review_file:
+      self.owner.show_review()
+
+  def on_deleted(self, event):
+    return
 
 class JSAPI:
   """
@@ -20,6 +59,8 @@ class JSAPI:
     """
     self.executor = Executor()
     self.executor.findreview()
+    self.observer = None
+    self._review_file = None
     self.change_review_dir(review_dir, guiupdate=False)
 
   def change_review_dir(self, dir, guiupdate=True):
@@ -33,11 +74,18 @@ class JSAPI:
     guiupdate: bool
       Specify true if GUI updates are performed at the same time (default true).
     """
+    if self.observer is not None:
+      self.observer.stop()
+      self.observer.join()
+      self.observer = None
     self._review_dir = Path(dir)
     self._files = list(self._review_dir.glob("*.re"))
     if guiupdate:
       self.update_title()
       self.update_list()
+    self.observer = Observer()
+    self.observer.schedule(ChangeHandler(self), str(self._review_dir))
+    self.observer.start()
 
   def update_title(self):
     """

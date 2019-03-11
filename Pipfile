@@ -11,6 +11,7 @@ pyinstaller = "*"
 pywebview = "*"
 pywin32 = "*"
 chardet = "*"
+watchdog = "*"
 
 [requires]
 python_version = "3.6"
