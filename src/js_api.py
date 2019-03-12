@@ -122,11 +122,15 @@ class JSAPI:
     else:
       self._review_file = self._review_dir / filename
     self._comm.frameurl = path_to_url(mypath() / "html" / "loading.html")
-    reviewtxt = self.executor.compile(self._review_file)
     previewhtml = self._review_file.parent / "preview.html"
-    with open(previewhtml, mode="w", encoding="utf-8") as f:
-      f.write(reviewtxt.replace("</body>", "<script src='{0}'></script></body>".format(path_to_url(mypath() / "html" / "frame.js"))))
-    self._comm.frameurl = path_to_url(previewhtml) + "?{0}#top{1}".format(self._review_file.stem, pos)
+    try:
+      reviewtxt = self.executor.compile(self._review_file)
+      with open(previewhtml, mode="w", encoding="utf-8") as f:
+        f.write(reviewtxt.replace("</body>", "<script src='{0}'></script></body>".format(path_to_url(mypath() / "html" / "frame.js"))))
+    except ValueError as e:
+      pass # TODO: Display messages, such as toast.
+    finally:
+      self._comm.frameurl = path_to_url(previewhtml) + "?{0}#top{1}".format(self._review_file.stem, pos)
 
 def path_to_url(path):
   """
