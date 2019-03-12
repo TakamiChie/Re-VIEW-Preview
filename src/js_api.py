@@ -114,8 +114,9 @@ class JSAPI:
       it is considered to be a relative path from review_dir.
       If the argument is none, only the current file is reloaded.
     """
+    pos = 0
     if filename is None:
-      pass
+      pos = webview.evaluate_js("pos")
     elif Path(filename).is_absolute():
       self._review_file = filename
     else:
@@ -125,7 +126,7 @@ class JSAPI:
     previewhtml = self._review_file.parent / "preview.html"
     with open(previewhtml, mode="w", encoding="utf-8") as f:
       f.write(reviewtxt.replace("</body>", "<script src='{0}'></script></body>".format(path_to_url(mypath() / "html" / "frame.js"))))
-    self._comm.frameurl = path_to_url(previewhtml) + "#{0}".format(self._review_file.stem)
+    self._comm.frameurl = path_to_url(previewhtml) + "?{0}#top{1}".format(self._review_file.stem, pos)
 
 def path_to_url(path):
   """
