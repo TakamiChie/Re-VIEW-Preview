@@ -5,6 +5,8 @@ class WebViewCommunicator:
   Methods for retrieving and setting WebView values.
   """
 
+  # window properties.
+
   @property
   def title(self):
     """
@@ -33,6 +35,7 @@ class WebViewCommunicator:
     """
     webview.evaluate_js("document.getElementById('preview_frame').src = '{0}';".format(url))
 
+  # methods.
   def setfilelist(self, files):
     """
     Update select#review-file.
