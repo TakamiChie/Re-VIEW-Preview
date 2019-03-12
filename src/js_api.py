@@ -4,6 +4,7 @@ from watchdog.events import FileSystemEventHandler
 from watchdog.observers import Observer
 
 from executor import Executor
+from wvcomm import WebViewCommunicator
 
 import main
 
@@ -59,6 +60,7 @@ class JSAPI:
     """
     self.executor = Executor()
     self.executor.findreview()
+    self._comm = WebViewCommunicator()
     self.observer = None
     self._review_file = None
     self.change_review_dir(review_dir, guiupdate=False)
@@ -91,26 +93,13 @@ class JSAPI:
     """
     Update GUI Window title.
     """
-    webview.set_title("{0} - {1}".format(main.APPNAME, self._review_dir.stem))
+    self._comm.title = "{0} - {1}".format(main.APPNAME, self._review_dir.stem)
 
   def update_list(self):
     """
     Update GUI file list.
     """
-    js = """
-    combo = document.getElementById('review-file');
-    while(combo.length > 0){ combo.remove(0); }
-    """
-    for file in self._files:
-      js += """
-      {{
-        let op = document.createElement("option");
-        op.value = "{0}";
-        op.text = "{0}";
-        combo.appendChild(op);
-      }}
-      """.format(file.name)
-    webview.evaluate_js(js)
+    self._comm.setfilelist(self._files)
     self.show_review(self._files[0])
 
   def show_review(self, filename = None):
@@ -131,12 +120,12 @@ class JSAPI:
       self._review_file = filename
     else:
       self._review_file = self._review_dir / filename
-    webview.evaluate_js("document.getElementById('preview_frame').src = '{0}';".format(path_to_url(mypath() / "html" / "loading.html")))
+    self._comm.frameurl = path_to_url(mypath() / "html" / "loading.html")
     reviewtxt = self.executor.compile(self._review_file)
     previewhtml = self._review_file.parent / "preview.html"
     with open(previewhtml, mode="w", encoding="utf-8") as f:
       f.write(reviewtxt)
-    webview.evaluate_js("document.getElementById('preview_frame').src = '{0}';".format(path_to_url((previewhtml))))
+    self._comm.frameurl = path_to_url(previewhtml)
 
 def path_to_url(path):
   """
