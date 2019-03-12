@@ -124,8 +124,8 @@ class JSAPI:
     reviewtxt = self.executor.compile(self._review_file)
     previewhtml = self._review_file.parent / "preview.html"
     with open(previewhtml, mode="w", encoding="utf-8") as f:
-      f.write(reviewtxt)
-    self._comm.frameurl = path_to_url(previewhtml)
+      f.write(reviewtxt.replace("</body>", "<script src='{0}'></script></body>".format(path_to_url(mypath() / "html" / "frame.js"))))
+    self._comm.frameurl = path_to_url(previewhtml) + "#{0}".format(self._review_file.stem)
 
 def path_to_url(path):
   """
