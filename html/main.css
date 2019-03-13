@@ -24,7 +24,7 @@ header > .navvar-brand{
 
 #toast_group{
   width: 40%;
-  right: 20px;
+  right: calc(20% + 40px);
   position: absolute;
 }
 
