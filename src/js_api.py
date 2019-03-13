@@ -128,7 +128,7 @@ class JSAPI:
       with open(previewhtml, mode="w", encoding="utf-8") as f:
         f.write(reviewtxt.replace("</body>", "<script src='{0}'></script></body>".format(path_to_url(mypath() / "html" / "frame.js"))))
     except ValueError as e:
-      pass # TODO: Display messages, such as toast.
+      self._comm.showmsg("Error", e)
     finally:
       self._comm.frameurl = path_to_url(previewhtml) + "?{0}#top{1}".format(self._review_file.stem, pos)
 

@@ -22,6 +22,12 @@ header > .navvar-brand{
   padding: 10px 15px;
 }
 
+#toast_group{
+  width: 40%;
+  right: 20px;
+  position: absolute;
+}
+
 .container-fluid{
   height: calc(100% - 60px);
 }

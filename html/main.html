@@ -19,6 +19,13 @@
     </form>
   </header>
   <div class="container-fluid">
+    <div id="toast_group">
+      <div class="toast" id="msg_output"
+        data-delay="5000" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header" id="msg_output_header"></div>
+        <div class="toast-body" id="msg_output_body"></div>
+      </div>
+    </div>
     <iframe id="preview_frame" src="../html/loading.html"></iframe>
   </div>
   <script src="../html/main.js"></script>

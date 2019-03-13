@@ -37,6 +37,24 @@ class WebViewCommunicator:
 
   # methods.
 
+  def showmsg(self, title, message):
+    """
+    Displays a toast message.
+
+    Parameters
+    ----
+    title: str
+      Toast title.
+    message: str
+      Toast message.
+    """
+    js = """
+    document.getElementById("msg_output_header").innerText = "{0}";
+    document.getElementById("msg_output_body").innerText = "{1}";
+    $("#msg_output").toast("show");
+    """.format(title, str(message).replace("\r\n", ""))
+    webview.evaluate_js(js)
+
   def setfilelist(self, files):
     """
     Update select#review-file.
