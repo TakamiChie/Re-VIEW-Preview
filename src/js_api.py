@@ -39,7 +39,8 @@ class ChangeHandler(FileSystemEventHandler):
     is not called in succession twice by the environment that the defect
     does not occur even if it calls show_review() twice in succession.
     """
-    if Path(event.src_path) == self.owner._review_file:
+    p = Path(event.src_path)
+    if p == self.owner._review_file or p.suffix in [".js", ".css"]:
       self.owner.show_review()
 
   def on_deleted(self, event):
