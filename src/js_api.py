@@ -127,7 +127,11 @@ class JSAPI:
     try:
       reviewtxt = self.executor.compile(self._review_file)
       with open(previewhtml, mode="w", encoding="utf-8") as f:
-        f.write(reviewtxt.replace("</body>", "<script src='{0}'></script></body>".format(path_to_url(mypath() / "html" / "frame.js"))))
+        f.write(reviewtxt.replace("</body>",
+          "<script src='{0}'></script></body>".format(path_to_url(mypath() / "html" / "frame.js"))) \
+            .replace("</head>",
+            "<link rel='stylesheet' href='{0}'></head>".format(path_to_url(mypath() / "html" / "frame.css"))
+            ))
     except ValueError as e:
       self._comm.showmsg("Error", e)
     finally:
