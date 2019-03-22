@@ -1,4 +1,4 @@
-from subprocess import Popen, PIPE
+import subprocess
 from chardet import detect
 
 class Executor:
@@ -40,8 +40,14 @@ class Executor:
     ValueError: str
       stderr was output.
     """
-    out, err = Popen(args, stdout=PIPE,
-      stderr=PIPE).communicate()
+    si = subprocess.STARTUPINFO()
+    si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+    si.wShowWindow |= subprocess.SW_HIDE
+    out, err = subprocess.Popen(args,
+      stdout=subprocess.PIPE,
+      stderr=subprocess.PIPE,
+      stdin=subprocess.DEVNULL,
+      startupinfo=si).communicate()
 
     if err != b"":
       raise ValueError(err.decode(detect(err)["encoding"]))

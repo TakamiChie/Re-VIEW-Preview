@@ -15,6 +15,7 @@ if(Test-Path $windll){
 Write-Host "> Creation EXE"
 pyinstaller `
   --onefile `
+  --windowed `
   --name RVPreview `
   --icon appicon.ico `
   --path $windllpath `
