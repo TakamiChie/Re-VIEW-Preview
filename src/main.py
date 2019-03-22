@@ -24,6 +24,7 @@ def load_thread(args, api):
     mypath = js_api.path_to_url(js_api.mypath())
     for line in f:
       html += line.replace("..", mypath)
+    webview.webview_ready()
     webview.load_html(html)
   api.update_title()
   api.update_list()
