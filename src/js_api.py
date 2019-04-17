@@ -23,6 +23,7 @@ class ChangeHandler(FileSystemEventHandler):
       owner object.
     """
     self.owner = owner
+    self.lastfile = { "name": "", "time": 0}
 
   def on_created(self, event):
     return
@@ -40,7 +41,12 @@ class ChangeHandler(FileSystemEventHandler):
     does not occur even if it calls show_review() twice in succession.
     """
     p = Path(event.src_path)
-    if p == self.owner._review_file or p.suffix in [".js", ".css"]:
+    if (p == self.owner._review_file or p.suffix in [".js", ".css"]) and \
+      (p.name != self.lastfile["name"] or p.stat().st_mtime != self.lastfile["time"]):
+      self.lastfile = {
+        "name": p.name,
+        "time": p.stat().st_mtime
+      }
       self.owner.show_review()
 
   def on_deleted(self, event):
