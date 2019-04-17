@@ -17,3 +17,10 @@ Tool to live Preview any Re:VIEW format document
 * [ ] Allow the directory to be changed on the GUI.
 * [ ] Non-HTML preview (PDF?) also corresponds to.
 * [ ] Synchronize to the visual Studio code display line (may be impossible).
+
+## Building the development environment
+
+1. Run `pipenv install`.
+2. Run `npm install`.
+3. Run `pipenv run setup`.
+4. Enjoy.
