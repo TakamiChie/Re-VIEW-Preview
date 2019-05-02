@@ -62,7 +62,7 @@ class JSAPI:
 
     Parameters
     ----
-    review_dir: str
+    review_dir: str|None
       Directory of Re:VIEW manuscript.
     """
     self.executor = Executor()
@@ -70,7 +70,10 @@ class JSAPI:
     self._comm = WebViewCommunicator()
     self.observer = None
     self._review_file = None
-    self.change_review_dir(review_dir, guiupdate=False)
+    self._review_dir = None
+    self._files = None
+    if review_dir is not None:
+      self.change_review_dir(review_dir, guiupdate=False)
 
   def change_review_dir(self, dir, guiupdate=True):
     """
@@ -100,14 +103,18 @@ class JSAPI:
     """
     Update GUI Window title.
     """
-    self._comm.title = "{0} - {1}".format(main.APPNAME, self._review_dir.stem)
+    if self._review_dir is None:
+      self._comm.title = main.APPNAME
+    else:
+      self._comm.title = "{0} - {1}".format(main.APPNAME, self._review_dir.stem)
 
   def update_list(self):
     """
     Update GUI file list.
     """
-    self._comm.setfilelist(self._files)
-    self.show_review(self._files[0])
+    if self._review_dir is not None:
+      self._comm.setfilelist(self._files)
+      self.show_review(self._files[0])
 
   def show_review(self, filename = None):
     """

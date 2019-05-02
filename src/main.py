@@ -12,7 +12,7 @@ def get_args():
   Set Arguments
   """
   parser = argparse.ArgumentParser()
-  parser.add_argument("dir", help="Directory of Re:VIEW manuscript", type=str)
+  parser.add_argument("dir", help="Directory of Re:VIEW manuscript", type=str, nargs='?')
   return (parser.parse_args())
 
 def load_thread(args, api):
@@ -31,10 +31,9 @@ def load_thread(args, api):
 
 def main():
   args = get_args()
-  if args.dir is not None:
-    api = js_api.JSAPI(args.dir)
-    threading.Thread(target=load_thread, args=(args, api)).start()
-    webview.create_window(title=APPNAME, width=640, height=320, min_size=(360, 400), js_api=api)
+  api = js_api.JSAPI(args.dir)
+  threading.Thread(target=load_thread, args=(args, api)).start()
+  webview.create_window(title=APPNAME, width=640, height=320, min_size=(360, 400), js_api=api)
 
 if __name__ == "__main__":
   main()
