@@ -150,6 +150,20 @@ class JSAPI:
     finally:
       self._comm.frameurl = path_to_url(previewhtml) + "?{0}#top{1}".format(self._review_file.stem, pos)
 
+  def directory_open(self, params = None):
+    """
+    Display a dialog and change the Re:VIEW directory.
+
+    Parameters
+    ----
+    params: None
+      Unused.
+    """
+    dir = webview.create_file_dialog(webview.FOLDER_DIALOG,
+      directory=self._review_dir or '',
+      allow_multiple=False)
+    self.change_review_dir(dir[0])
+
 def path_to_url(path):
   """
   Convert the file path to a URL that can be embedded in JavaScript.
