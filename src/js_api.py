@@ -136,19 +136,20 @@ class JSAPI:
     else:
       self._review_file = self._review_dir / filename
     self._comm.frameurl = path_to_url(mypath() / "html" / "loading.html")
-    previewhtml = self._review_file.parent / "preview.html"
-    try:
-      reviewtxt = self.executor.compile(self._review_file)
-      with open(previewhtml, mode="w", encoding="utf-8") as f:
-        f.write(reviewtxt.replace("</body>",
-          "<script src='{0}'></script></body>".format(path_to_url(mypath() / "html" / "frame.js"))) \
-            .replace("</head>",
-            "<link rel='stylesheet' href='{0}'></head>".format(path_to_url(mypath() / "html" / "frame.css"))
-            ))
-    except ValueError as e:
-      self._comm.showmsg("Error", e)
-    finally:
-      self._comm.frameurl = path_to_url(previewhtml) + "?{0}#top{1}".format(self._review_file.stem, pos)
+    if self._review_file != None:
+      previewhtml = self._review_file.parent / "preview.html"
+      try:
+        reviewtxt = self.executor.compile(self._review_file)
+        with open(previewhtml, mode="w", encoding="utf-8") as f:
+          f.write(reviewtxt.replace("</body>",
+            "<script src='{0}'></script></body>".format(path_to_url(mypath() / "html" / "frame.js"))) \
+              .replace("</head>",
+              "<link rel='stylesheet' href='{0}'></head>".format(path_to_url(mypath() / "html" / "frame.css"))
+              ))
+      except ValueError as e:
+        self._comm.showmsg("Error", e)
+      finally:
+        self._comm.frameurl = path_to_url(previewhtml) + "?{0}#top{1}".format(self._review_file.stem, pos)
 
   def directory_open(self, params = None):
     """
