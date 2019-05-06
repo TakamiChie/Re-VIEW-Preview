@@ -20,7 +20,8 @@ Tool to live Preview any Re:VIEW format document
 
 ## Building the development environment
 
-1. Run `pipenv install`.
-2. Run `npm install`.
-3. Run `pipenv run setup`.
-4. Enjoy.
+1. Install Re:VIEW with the `gem install review` command.
+2. Run `pipenv install`.
+3. Run `npm install`.
+4. Run `pipenv run setup`.
+5. Enjoy.
