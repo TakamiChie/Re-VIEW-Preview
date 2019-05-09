@@ -27,4 +27,6 @@ pyinstaller `
   --add-binary "../.venv/Lib/site-packages/webview/lib;webview/lib" `
   --add-binary "../appicon.*;." `
   src\main.py
+Write-Host "> Create Archive"
+Compress-Archive -Path .\dist\dist\RVPreview\* -DestinationPath .\dist\RVPreview-Win64.zip
 Write-Host "> Complete"
