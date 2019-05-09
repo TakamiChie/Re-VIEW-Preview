@@ -14,7 +14,7 @@ Tool to live Preview any Re:VIEW format document
 
 ### If you have time
 
-* [ ] Allow the directory to be changed on the GUI.
+* [x] Allow the directory to be changed on the GUI.
 * [ ] Non-HTML preview (PDF?) also corresponds to.
 * [ ] Synchronize to the visual Studio code display line (may be impossible).
 
@@ -25,3 +25,17 @@ Tool to live Preview any Re:VIEW format document
 3. Run `npm install`.
 4. Run `pipenv run setup`.
 5. Enjoy.
+
+## How to Run
+
+1. Make the project root folder the current directory.
+2. Enter the pipenv shell with the `pipenv shell` command.
+3. Run main.py with the `python ./src/main.py` command
+
+## How to create an executable file
+
+### For Windows
+
+1. Make the project root folder the current directory.
+2. Enter the pipenv shell with the `pipenv shell` command.
+3. Execute `./create_exe.ps1`.
