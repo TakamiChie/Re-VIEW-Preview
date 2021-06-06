@@ -1,3 +1,5 @@
+import typing
+
 import webview
 
 class WebViewCommunicator:
@@ -8,28 +10,28 @@ class WebViewCommunicator:
   # window properties.
 
   @property
-  def title(self):
+  def title(self) -> str:
     """
     Gets and sets the title of the window.
     """
     return webview.evaluate_js("document.title")
 
   @title.setter
-  def title(self, newtitle):
+  def title(self, newtitle: str) -> None:
     """
     Gets and sets the title of the window.
     """
     return webview.set_title(newtitle)
 
   @property
-  def frameurl(self):
+  def frameurl(self) -> str:
     """
     Gets and sets the URL of the iframe#preview_frame.
     """
     return webview.evaluate_js("document.getElementById('preview_frame').src")
 
   @frameurl.setter
-  def frameurl(self, url):
+  def frameurl(self, url: str) -> None:
     """
     Gets and sets the URL of the iframe#preview_frame.
     """
@@ -37,7 +39,7 @@ class WebViewCommunicator:
 
   # methods.
 
-  def showmsg(self, title, message):
+  def showmsg(self, title: str, message: str) -> None:
     """
     Displays a toast message.
 
@@ -55,9 +57,14 @@ class WebViewCommunicator:
     """.format(title, str(message).replace("\r\n", ""))
     webview.evaluate_js(js)
 
-  def setfilelist(self, files):
+  def setfilelist(self, files: typing.List[str]) -> None:
     """
     Update select#review-file.
+
+    Parameters
+    ----
+    files: str[list]
+      File lists.
     """
     js = """
     combo = document.getElementById('review-file');

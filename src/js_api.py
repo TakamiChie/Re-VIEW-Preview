@@ -1,5 +1,6 @@
 from pathlib import Path
 import webview
+import typing
 from watchdog.events import FileSystemEventHandler
 from watchdog.observers import Observer
 
@@ -75,7 +76,7 @@ class JSAPI:
     if review_dir is not None:
       self.change_review_dir(review_dir, guiupdate=False)
 
-  def change_review_dir(self, dir, guiupdate=True):
+  def change_review_dir(self, dir: str, guiupdate: bool=True) -> None:
     """
     Change Re:VIEW's directory
 
@@ -99,7 +100,7 @@ class JSAPI:
     self.observer.schedule(ChangeHandler(self), str(self._review_dir))
     self.observer.start()
 
-  def update_title(self):
+  def update_title(self) -> None:
     """
     Update GUI Window title.
     """
@@ -108,7 +109,7 @@ class JSAPI:
     else:
       self._comm.title = "{0} - {1}".format(main.APPNAME, self._review_dir.stem)
 
-  def update_list(self):
+  def update_list(self) -> None:
     """
     Update GUI file list.
     """
@@ -116,7 +117,7 @@ class JSAPI:
       self._comm.setfilelist(self._files)
       self.show_review(self._files[0])
 
-  def show_review(self, filename = None):
+  def show_review(self, filename: typing.Union[str,Path] = None) -> None:
     """
     Update GUI Re:VIEW window.
 
@@ -151,7 +152,7 @@ class JSAPI:
       finally:
         self._comm.frameurl = path_to_url(previewhtml) + "?{0}#top{1}".format(self._review_file.stem, pos)
 
-  def directory_open(self, params = None):
+  def directory_open(self, params: typing.Any = None) -> None:
     """
     Display a dialog and change the Re:VIEW directory.
 
@@ -165,7 +166,7 @@ class JSAPI:
       allow_multiple=False)
     self.change_review_dir(dir[0])
 
-def path_to_url(path):
+def path_to_url(path: Path) -> str:
   """
   Convert the file path to a URL that can be embedded in JavaScript.
 
@@ -181,7 +182,7 @@ def path_to_url(path):
   """
   return str(path).replace("\\", "\\\\")
 
-def mypath():
+def mypath() -> Path:
   """
   Get the root folder path for the project.
 

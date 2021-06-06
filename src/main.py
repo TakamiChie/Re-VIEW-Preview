@@ -1,13 +1,16 @@
-import webview
 import threading
 import argparse
+from pathlib import Path
+
+import webview
+
 import js_api
 
 APPNAME = "Re:VIEW Preview"
 ev = threading.Event()
 api = None
 
-def get_args():
+def get_args() -> argparse.Namespace:
   """
   Set Arguments
   """
@@ -15,7 +18,7 @@ def get_args():
   parser.add_argument("dir", help="Directory of Re:VIEW manuscript", type=str, nargs='?')
   return (parser.parse_args())
 
-def load_thread(args, api):
+def load_thread(window: webview.Window, api) -> None:
   """
   Start work thread
   """
@@ -29,7 +32,7 @@ def load_thread(args, api):
   api.update_title()
   api.update_list()
 
-def main():
+def main() -> None:
   args = get_args()
   api = js_api.JSAPI(args.dir)
   threading.Thread(target=load_thread, args=(args, api)).start()
