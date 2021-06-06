@@ -27,8 +27,7 @@ def load_thread(window: webview.Window, api) -> None:
     mypath = js_api.path_to_url(js_api.mypath())
     for line in f:
       html += line.replace("..", mypath)
-    webview.webview_ready()
-    webview.load_html(html)
+    window.load_html(html)
   api.update_title()
   api.update_list()
 
@@ -37,7 +36,7 @@ def main() -> None:
   api = js_api.JSAPI()
   window = webview.create_window(title=APPNAME, width=640, height=320, min_size=(360, 400), js_api=api)
   api.initialize(args.dir, window)
-  webview.start(load_thread, args=(window, api), debug=True, http_server=True)
+  webview.start(load_thread, args=(window, api), gui="mshtml", debug=True)
 
 if __name__ == "__main__":
   main()

@@ -12,6 +12,7 @@ pywebview = "*"
 pywin32 = "*"
 chardet = "*"
 watchdog = "*"
+pythonnet = "*"
 
 [requires]
 python_version = "3.8"
