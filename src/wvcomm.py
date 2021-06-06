@@ -64,7 +64,7 @@ class WebViewCommunicator:
     result: Any
       Result Script
     """
-    self.window.evaluate_js(str)
+    return self.window.evaluate_js(script)
 
   def showmsg(self, title: str, message: str) -> None:
     """
