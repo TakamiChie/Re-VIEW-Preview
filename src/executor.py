@@ -1,6 +1,7 @@
 import subprocess
 import typing
 from chardet import detect
+from pathlib import Path
 
 class Executor:
   """
