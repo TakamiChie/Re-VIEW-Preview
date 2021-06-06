@@ -141,7 +141,7 @@ class JSAPI:
     """
     pos = 0
     if filename is None:
-      pos = webview.evaluate_js("pos")
+      pos = self._comm.evaluate_js("pos")
     elif Path(filename).is_absolute():
       self._review_file = filename
     else:

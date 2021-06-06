@@ -50,6 +50,22 @@ class WebViewCommunicator:
 
   # methods.
 
+  def evaluate_js(self, script: str) -> typing.Any:
+    """
+    Execute JavaScript on PyWebView and return the result.
+
+    Parameters
+    ----
+    script: str
+      Scripts to execute.
+
+    Returns
+    ----
+    result: Any
+      Result Script
+    """
+    self.window.evaluate_js(str)
+
   def showmsg(self, title: str, message: str) -> None:
     """
     Displays a toast message.
