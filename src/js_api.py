@@ -57,22 +57,32 @@ class JSAPI:
   """
   JSAPI
   """
-  def __init__(self, review_dir):
+  def __init__(self) -> None:
     """
     Initialize Object.
+    """
+    self.executor = Executor()
+    self.executor.findreview()
+    self._comm = None
+    self.observer = None
+    self._review_file = None
+    self._review_dir = None
+    self._files = None
+
+  def initialize(self, review_dir: str, window: webview.Window) -> None:
+    """
+    Initialize Object 2.
+    PyWebView upgrade separates it from constructors because it requires window objects to connect to WebView.
+    You must always call this method before calling it.
 
     Parameters
     ----
     review_dir: str|None
       Directory of Re:VIEW manuscript.
+    window: webview.Window
+      WebView Window Object.
     """
-    self.executor = Executor()
-    self.executor.findreview()
-    self._comm = WebViewCommunicator()
-    self.observer = None
-    self._review_file = None
-    self._review_dir = None
-    self._files = None
+    self._comm = WebViewCommunicator(window)
     if review_dir is not None:
       self.change_review_dir(review_dir, guiupdate=False)
 

@@ -7,6 +7,17 @@ class WebViewCommunicator:
   Methods for retrieving and setting WebView values.
   """
 
+  def __init__(self, window: webview.Window) -> None:
+    """
+    Initialize Object.
+
+    Parameters
+    ----
+    window: webview.Window
+      WebView Window Object.
+    """
+    self.window = window
+
   # window properties.
 
   @property
@@ -14,28 +25,28 @@ class WebViewCommunicator:
     """
     Gets and sets the title of the window.
     """
-    return webview.evaluate_js("document.title")
+    return self.window.evaluate_js("document.title")
 
   @title.setter
   def title(self, newtitle: str) -> None:
     """
     Gets and sets the title of the window.
     """
-    return webview.set_title(newtitle)
+    return self.window.set_title(newtitle)
 
   @property
   def frameurl(self) -> str:
     """
     Gets and sets the URL of the iframe#preview_frame.
     """
-    return webview.evaluate_js("document.getElementById('preview_frame').src")
+    return self.window.evaluate_js("document.getElementById('preview_frame').src")
 
   @frameurl.setter
   def frameurl(self, url: str) -> None:
     """
     Gets and sets the URL of the iframe#preview_frame.
     """
-    webview.evaluate_js("document.getElementById('preview_frame').src = '{0}';".format(url))
+    self.window.evaluate_js("document.getElementById('preview_frame').src = '{0}';".format(url))
 
   # methods.
 
@@ -55,7 +66,7 @@ class WebViewCommunicator:
     document.getElementById("msg_output_body").innerText = "{1}";
     $("#msg_output").toast("show");
     """.format(title, str(message).replace("\r\n", ""))
-    webview.evaluate_js(js)
+    self.window.evaluate_js(js)
 
   def setfilelist(self, files: typing.List[str]) -> None:
     """
@@ -79,4 +90,4 @@ class WebViewCommunicator:
         combo.appendChild(op);
       }}
       """.format(file.name)
-    webview.evaluate_js(js)
+    self.window.evaluate_js(js)

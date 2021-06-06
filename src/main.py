@@ -34,9 +34,10 @@ def load_thread(window: webview.Window, api) -> None:
 
 def main() -> None:
   args = get_args()
-  api = js_api.JSAPI(args.dir)
-  threading.Thread(target=load_thread, args=(args, api)).start()
-  webview.create_window(title=APPNAME, width=640, height=320, min_size=(360, 400), js_api=api)
+  api = js_api.JSAPI()
+  window = webview.create_window(title=APPNAME, width=640, height=320, min_size=(360, 400), js_api=api)
+  api.initialize(args.dir, window)
+  webview.start(load_thread, args=(window, api), debug=True, http_server=True)
 
 if __name__ == "__main__":
   main()
