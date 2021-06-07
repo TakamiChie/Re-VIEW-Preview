@@ -24,8 +24,9 @@ a.nav-link {
   cursor: pointer;
 }
 
-header{
-  height: 50px;
+header {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 header > .navvar-brand{
