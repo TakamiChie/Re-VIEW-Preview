@@ -171,8 +171,8 @@ class JSAPI:
     params: None
       Unused.
     """
-    dir = webview.create_file_dialog(webview.FOLDER_DIALOG,
-      directory=self._review_dir or '',
+    dir = self._comm.window.create_file_dialog(webview.FOLDER_DIALOG,
+      directory=str(self._review_dir) or '',
       allow_multiple=False)
     self.change_review_dir(dir[0])
 
