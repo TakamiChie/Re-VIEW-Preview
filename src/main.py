@@ -49,7 +49,7 @@ class Application:
     self.window = webview.create_window(const.APPNAME, self.server,
       width = self.config["window"]["width"] if "width" in self.config["window"] else 640,
       height =  self.config["window"]["height"] if "height" in self.config["window"] else 320,
-      min_size = (360, 400), js_api=api)
+      min_size = (360, 400), js_api=self.api)
     if "x" in self.config["window"]: self.window.initial_x = self.config["window"]["x"]
     if "y" in self.config["window"]: self.window.initial_y = self.config["window"]["y"]
     if "openeddir" in self.config and self.args.dir is None and Path(self.config["openeddir"]).exists() :
