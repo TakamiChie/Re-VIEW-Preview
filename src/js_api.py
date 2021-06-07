@@ -7,7 +7,7 @@ from watchdog.observers import Observer
 from executor import Executor
 from wvcomm import WebViewCommunicator
 
-import main
+import const
 
 class ChangeHandler(FileSystemEventHandler):
   """
@@ -115,9 +115,9 @@ class JSAPI:
     Update GUI Window title.
     """
     if self._review_dir is None:
-      self._comm.title = main.APPNAME
+      self._comm.title = const.APPNAME
     else:
-      self._comm.title = "{0} - {1}".format(main.APPNAME, self._review_dir.stem)
+      self._comm.title = "{0} - {1}".format(const.APPNAME, self._review_dir.stem)
 
   def update_list(self) -> None:
     """
@@ -146,21 +146,21 @@ class JSAPI:
       self._review_file = filename
     else:
       self._review_file = self._review_dir / filename
-    self._comm.frameurl = path_to_url(mypath() / "html" / "loading.html")
+    self._comm.frameurl = "/html/loading.html"
     if self._review_file != None:
       previewhtml = self._review_file.parent / "preview.html"
       try:
         reviewtxt = self.executor.compile(self._review_file)
         with open(previewhtml, mode="w", encoding="utf-8") as f:
           f.write(reviewtxt.replace("</body>",
-            "<script src='{0}'></script></body>".format(path_to_url(mypath() / "html" / "frame.js"))) \
+            "<script src='/html/frame.js'></script></body>") \
               .replace("</head>",
-              "<link rel='stylesheet' href='{0}'></head>".format(path_to_url(mypath() / "html" / "frame.css"))
-              ))
+              "<link rel='stylesheet' href='/html/frame.css'></head>")
+              )
       except ValueError as e:
         self._comm.showmsg("Error", e)
       finally:
-        self._comm.frameurl = path_to_url(previewhtml) + "?{0}#top{1}".format(self._review_file.stem, pos)
+        self._comm.frameurl = "/book/preview.html?{0}#top{1}".format(self._review_file.stem, pos)
 
   def directory_open(self, params: typing.Any = None) -> None:
     """
