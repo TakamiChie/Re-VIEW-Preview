@@ -28,6 +28,7 @@ class Server:
     else:
       status = '404 Not found'
       content= b'Not found'
+    self._logger.debug(f"status:{status} {path}->{filepath} Content Size:{len(content)}")
     start_response(status, headers)
     return [content]
 
