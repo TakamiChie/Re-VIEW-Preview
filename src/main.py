@@ -1,13 +1,17 @@
-import webview
 import threading
 import argparse
-import js_api
+import logging
 
-APPNAME = "Re:VIEW Preview"
+import webview
+
+import js_api
+import server
+import const
+
 ev = threading.Event()
 api = None
 
-def get_args():
+def get_args() -> argparse.Namespace:
   """
   Set Arguments
   """
@@ -15,25 +19,23 @@ def get_args():
   parser.add_argument("dir", help="Directory of Re:VIEW manuscript", type=str, nargs='?')
   return (parser.parse_args())
 
-def load_thread(args, api):
+def load_thread(window: webview.Window, api) -> None:
   """
   Start work thread
   """
-  with open(js_api.mypath() / "html" / "main.html", mode="r", encoding="utf-8") as f:
-    html = ""
-    mypath = js_api.path_to_url(js_api.mypath())
-    for line in f:
-      html += line.replace("..", mypath)
-    webview.webview_ready()
-    webview.load_html(html)
   api.update_title()
   api.update_list()
 
-def main():
+def main() -> None:
   args = get_args()
-  api = js_api.JSAPI(args.dir)
-  threading.Thread(target=load_thread, args=(args, api)).start()
-  webview.create_window(title=APPNAME, width=640, height=320, min_size=(360, 400), js_api=api)
+  api = js_api.JSAPI()
+  log = logging.getLogger(const.APPNAME)
+  log.setLevel(logging.DEBUG)
+  log.addHandler(logging.StreamHandler())
+  serv = server.Server(logger=log.getChild(server.Server.__name__), api=api)
+  window = webview.create_window(const.APPNAME, serv, width=640, height=320, min_size=(360, 400), js_api=api)
+  api.initialize(args.dir, window)
+  webview.start(load_thread, args=(window, api), debug=True)
 
 if __name__ == "__main__":
   main()

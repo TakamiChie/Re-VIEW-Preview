@@ -16,7 +16,7 @@ Write-Host "> Creation EXE"
 pyinstaller `
   --windowed `
   --name RVPreview `
-  --icon appicon.ico `
+  --icon ../appicon.ico `
   --path $windllpath `
   --path C:/Windows/System32/downlevel `
   --specpath ./dist/ `
@@ -24,7 +24,6 @@ pyinstaller `
   --workpath ./dist/build `
   --add-data "../html;html" `
   --add-data "../node_modules;node_modules" `
-  --add-binary "../.venv/Lib/site-packages/webview/lib;webview/lib" `
   --add-binary "../appicon.*;." `
   src\main.py
 Write-Host "> Create Archive"

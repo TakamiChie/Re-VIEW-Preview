@@ -1,17 +1,19 @@
 import subprocess
+import typing
 from chardet import detect
+from pathlib import Path
 
 class Executor:
   """
   Executor of Re:VIEW
   """
-  def __init__(self):
+  def __init__(self) -> None:
     """
     Initialize
     """
     self.findreview()
 
-  def findreview(self):
+  def findreview(self) -> str:
     """
     Find review command.
     """
@@ -21,7 +23,7 @@ class Executor:
       self._review_path = None
     return self._review_path
 
-  def call(self, args):
+  def call(self, args: typing.List[str]):
     """
     Execute the external program and obtain the result.
 
@@ -53,7 +55,7 @@ class Executor:
       raise ValueError(err.decode(detect(err)["encoding"]))
     return out.decode(detect(out)["encoding"]) if out != b"" else ""
 
-  def compile(self, filepath):
+  def compile(self, filepath: Path) -> str:
     """
     Execute Re:VIEW converter.
 
@@ -61,6 +63,11 @@ class Executor:
     ----
     filepath: Path
       File path to be converted
+
+    Returns
+    ----
+    return: str
+      Compiled string.
     """
     if self._review_path is not None:
       import os
