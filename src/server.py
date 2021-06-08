@@ -5,15 +5,61 @@ import js_api
 import mimetypes
 
 class Server:
+  """
+  HTTP Server Object.
+  """
+
   def __init__(self, logger: logging.Logger, api: js_api.JSAPI) -> None:
+    """
+    Initialize Object
+
+    Parameters
+    ----
+    logger: logging.Logger
+      Logger Object
+
+    api: js_api.JSAPI
+      API Object
+    """
     self.__webview_url = ""
     self._jsapi = api
     self._logger = logger
 
   def __call__(self, environ: typing.Dict, start_response: typing.Callable) -> typing.Any:
+    """
+    Respond to HTTP request.
+    The actual process is performed by `server#proc()`.
+
+    Parameters
+    ----
+    environ: dict
+      Environment variable.
+    start_response: callable
+      Function at start of response.
+
+    Returns
+    ----
+    responce_data: Any
+      Response body
+    """
     return self.proc(environ, start_response)
 
   def proc(self, environ: typing.Dict, start_response: typing.Callable) -> typing.Any:
+    """
+    Respond to HTTP request.
+
+    Parameters
+    ----
+    environ: dict
+      Environment variable.
+    start_response: callable
+      Function at start of response.
+
+    Returns
+    ----
+    responce_data: Any
+      Response body
+    """
     path = environ["PATH_INFO"]
     filepath = self.findfilepath(path)
     content = None
